@@ -27,11 +27,12 @@ class forumone::ruby (
     group => $group,
     home  => "/home/${user}",
     root => "/home/${user}/.rbenv"
-  } ->
+  }
   
   # rbenv version
   file { $ruby_directory:
-    ensure  => "directory"
+    ensure  => "directory",
+    require => Exec["rbenv::checkout ${user}"]
   }
   
   # extract from the ruby archive
