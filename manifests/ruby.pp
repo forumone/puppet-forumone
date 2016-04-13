@@ -43,4 +43,25 @@ class forumone::ruby (
     require => File[$ruby_directory],
     creates => "${ruby_directory}/bin",
   }
+  
+  file { "/home/${user}/Gemfile":
+    ensure  => present,
+    path    => "/home/${user}/Gemfile",
+    owner   => $user,
+    group   => $group,
+    content => file('/vagrant/Gemfile'),
+    backup  => false,
+    require => Exec["forumone::ruby::extract"]
+  }
+  
+  exec {"${user} bundle":
+    command   => "bundle",
+    cwd       => "/vagrant",
+    user      => $user,
+    group     => $group,
+    path      => "/home/${user}/bin:/home/${user}/.rbenv/shims:/bin:/usr/bin",
+    creates   => "/vagrant/Gemfile.lock",
+    subscribe => File["/home/${user}/Gemfile"],
+    require   => Rbenvgem["${user}/${version}/bundler/present"]
+  }
 }
