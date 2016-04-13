@@ -9,7 +9,7 @@ class forumone::drupalconsole ($url = 'https://drupalconsole.com/installer')
   exec { 'forumone::drupalconsole::drupalinit':
     command => "drupal init",
     path    => ['/usr/bin','/usr/local/bin'],
-    require => File['/usr/local/bin/drupal'],
+    require => [ File['/usr/local/bin/drupal'], Class['forumone::php'] ],
     user    => vagrant,
     environment => ['HOME=/home/vagrant/'],
     }
