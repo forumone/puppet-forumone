@@ -7,15 +7,17 @@ class forumone::drupalconsole ($url = 'https://drupalconsole.com/installer')
     }
 
   exec { 'forumone::drupalconsole::drupalinit':
-    command => "/usr/local/bin/drupal init",
-    path    => '/usr/bin',
+    command => "drupal init",
+    path    => ['/usr/bin','/usr/local/bin'],
     require => File['/usr/local/bin/drupal'],
+    user    => vagrant,
+    environment => ['HOME=/home/vagrant/'],
     }
 
   file { '/usr/local/bin/drupal':
     ensure  => 'file',
-    owner   => 'root',
-    group   => 'root',
+    owner   => 'vagrant',
+    group   => 'vagrant',
     mode    => '755',
     require => Exec ['forumone::drupalconsole::download']
     }
