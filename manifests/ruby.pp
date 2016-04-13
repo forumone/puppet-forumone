@@ -19,6 +19,8 @@ class forumone::ruby (
     path    => '/usr/bin',
     require => [ File["/tmp/vagrant-cache"] ],
     creates => "/tmp/vagrant-cache/ruby-${version}.tgz",
+    user    => $user,
+    group   => $group,
     timeout => 4800,
   }
 
@@ -29,11 +31,15 @@ class forumone::ruby (
     root => "/home/${user}/.rbenv"
   } -> 
   file { "/home/${user}/.rbenv/versions":
-    ensure  => "directory"
+    ensure  => "directory",
+    owner   => $user,
+    group   => $group,
   } ->
   file { $ruby_directory:
     ensure  => "directory",
-    require => Exec["rbenv::checkout ${user}"]       
+    require => Exec["rbenv::checkout ${user}"]  ,
+    owner   => $user,
+    group   => $group,     
   }
 
   # extract from the ruby archive
