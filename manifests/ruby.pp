@@ -61,7 +61,6 @@ class forumone::ruby (
     group     => $group,
     path      => "/home/${user}/bin:/home/${user}/.rbenv/shims:/bin:/usr/bin",
     creates   => "/vagrant/Gemfile.lock",
-    subscribe => File["/home/${user}/Gemfile"],
-    require   => Rbenvgem["${user}/${version}/bundler/present"]
+    subscribe => File["/home/${user}/Gemfile"]
   }
 }
