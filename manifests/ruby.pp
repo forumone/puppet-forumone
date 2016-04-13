@@ -6,14 +6,14 @@ class forumone::ruby (
 
   $ruby_directory = "/home/${user}/.rbenv/versions/${version}"
   $ruby_download = "https://s3.amazonaws.com/pkgr-buildpack-ruby/current/centos-6/ruby-${version}.tgz"
-  
+
   rbenv::plugin::rbenvvars { $user:
     user  => $user,
     group => $group,
     home  => "/home/${user}",
     root  => "/home/${user}/.rbenv"
   }
-  
+
   exec { "forumone::ruby::download":
     command => "wget --directory-prefix=/tmp/vagrant-cache ${ruby_download}",
     path    => '/usr/bin',
@@ -21,20 +21,21 @@ class forumone::ruby (
     creates => "/tmp/vagrant-cache/ruby-${version}.tgz",
     timeout => 4800,
   }
-  
+
   rbenv::install { $user:
     user => $user,
     group => $group,
     home  => "/home/${user}",
     root => "/home/${user}/.rbenv"
-  }
-  
-  # rbenv version
+  } -> 
+  file { "/home/${user}/.rbenv/versions":
+    ensure  => "directory"
+  } ->
   file { $ruby_directory:
     ensure  => "directory",
-    require => Exec["rbenv::checkout ${user}"]
+    require => Exec["rbenv::checkout ${user}"]       
   }
-  
+
   # extract from the ruby archive
   exec { "forumone::ruby::extract":
     command => "tar -zxvf /tmp/vagrant-cache/ruby-${version}.tgz -C ${ruby_directory}",
