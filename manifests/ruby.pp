@@ -48,5 +48,7 @@ class forumone::ruby (
     path    => ["/bin"],
     require => File[$ruby_directory],
     creates => "${ruby_directory}/bin",
+    user    => $user,
+    group   => $group
   }
 }
