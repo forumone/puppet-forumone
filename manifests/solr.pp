@@ -18,11 +18,6 @@ class forumone::solr ($version = "3.6.2") {
   # install the java package.
   package { ["java-1.7.0-openjdk"]: ensure => installed, }
 
-  # Download apache solr
-  file { "/tmp/vagrant-cache":
-    ensure  => "directory"
-  }
-
   exec { "forumone::solr::download":
     command => "wget --directory-prefix=/tmp/vagrant-cache ${url}",
     path    => '/usr/bin',
