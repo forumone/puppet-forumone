@@ -4,6 +4,17 @@ class forumone ($ports = [80, 443, 8080, 8081, 18983, 8983, 3306, 13306, 1080, 4
       class { 'forumone::os::fedora::project': }
     }
   }
+  
+  file { "/vagrant":   
+    ensure  => "directory",
+    owner   => $::puppet_user,
+    group   => $::puppet_group
+  }
+  
+  # Vagrant cachier directory
+  file { "/tmp/vagrant-cache":
+    ensure  => "directory"
+  }
 
   file { "/home/vagrant/.bashrc":
     ensure  => present,
