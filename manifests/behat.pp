@@ -111,15 +111,6 @@ class forumone::behat ($version = '2.5') {
       require  => File["${path}/tests/behat/features"],
     }
 
-    file { "${path}/tests/behat/features/TESTS/test.feature":
-      ensure   => present,
-      owner    => $::host_uid,
-      group    => $::host_gid,
-      mode     => "644",
-      require  => File["${path}/tests/behat/features"],
-      content  => template("forumone/behat/features/TESTS/test.feature.erb")
-    }
-
     file { "${path}/tests/behat/features/TESTS":
       ensure   => directory,
       owner    => $::host_uid,
@@ -128,12 +119,23 @@ class forumone::behat ($version = '2.5') {
       require  => File["${path}/tests/behat/features"],
     }
 
+    file { "${path}/tests/behat/features/TESTS/test.feature":
+      ensure   => present,
+      owner    => $::host_uid,
+      group    => $::host_gid,
+      mode     => "644",
+      require  => File["${path}/tests/behat/features/TESTS"],
+      replace  => no,
+      content  => template("forumone/behat/features/TESTS/test.feature.erb")
+    }
+
     file { "${path}/tests/behat/features/TESTS/test-js.feature":
       ensure   => present,
       owner    => $::host_uid,
       group    => $::host_gid,
       mode     => "644",
-      require  => File["${path}/tests/behat/features"],
+      require  => File["${path}/tests/behat/features/TESTS"],
+      replace  => no,
       content  => template("forumone/behat/features/TESTS/test-js.feature.erb")
     }
 
@@ -143,6 +145,7 @@ class forumone::behat ($version = '2.5') {
       group    => $::host_gid,
       mode     => "644",
       require  => File["${path}/tests/behat/features/bootstrap"],
+      replace  => no,
       content  => template("forumone/behat/features/bootstrap/FeatureContext.php.erb")
     }
 
@@ -151,6 +154,7 @@ class forumone::behat ($version = '2.5') {
       owner    => $::host_uid,
       group    => $::host_gid,
       mode     => "644",
+      replace  => no,
       require  => File["${path}/tests/behat"],
       content  => template("forumone/behat/behat.yml.erb")
     }
@@ -161,6 +165,7 @@ class forumone::behat ($version = '2.5') {
       group    => $::host_gid,
       mode     => "644",
       require  => File["${path}/tests/behat"],
+      replace  => no,
       content  => template("forumone/behat/behat.jenkins.yml.erb")
     }
 
@@ -173,15 +178,6 @@ class forumone::behat ($version = '2.5') {
       content  => template("forumone/behat/composer.json.erb")
     }
 
-    file { "${path}/tests/behat/nodeconfig.mac.json":
-      ensure   => present,
-      owner    => $::host_uid,
-      group    => $::host_gid,
-      mode     => "644",
-      require  => File["${path}/tests/behat"],
-      content  => template("forumone/behat/nodeconfig.mac.json.erb")
-    }
-
     file { "${path}/tests/behat/nodeconfig.server.json":
       ensure   => present,
       owner    => $::host_uid,
@@ -191,13 +187,34 @@ class forumone::behat ($version = '2.5') {
       content  => template("forumone/behat/nodeconfig.server.json.erb")
     }
 
+    file { "${path}/tests/behat/nodeconfig.mac.json":
+      ensure   => present,
+      owner    => $::host_uid,
+      group    => $::host_gid,
+      mode     => "644",
+      require  => File["${path}/tests/behat"],
+      replace  => no,
+      content  => template("forumone/behat/nodeconfig.mac.json.erb")
+    }
+
     file { "${path}/tests/behat/nodeconfig.windows.json":
       ensure   => present,
       owner    => $::host_uid,
       group    => $::host_gid,
       mode     => "644",
       require  => File["${path}/tests/behat"],
+      replace  => no,
       content  => template("forumone/behat/nodeconfig.windows.json.erb")
+    }
+
+    file { "${path}/tests/behat/nodeconfig.linux.json":
+      ensure   => present,
+      owner    => $::host_uid,
+      group    => $::host_gid,
+      mode     => "644",
+      require  => File["${path}/tests/behat"],
+      replace  => no,
+      content  => template("forumone/behat/nodeconfig.linux.json.erb")
     }
 
     file { "${path}/tests/behat/README.md":
