@@ -1,5 +1,7 @@
 class forumone::drush ($version = '7.1.0') {
   $filename = "${version}.zip"
+  $version_array = split($version, '[.]')
+  $major_version = $version_array[0]
 
   include forumone::composer
 
@@ -39,13 +41,15 @@ class forumone::drush ($version = '7.1.0') {
     require => Exec['forumone::drush::extract']
   }
 
-  exec { 'forumone::drush::composer':
-    command => "composer install",
-    cwd     => "/opt/drush-${version}",
-    path    => ['/usr/bin', '/user/local/bin'],
-    creates => "/opt/drush-${version}/vendor/bin/phpunit",
-    require => [Exec["forumone::drush::extract"], Class['forumone::composer']],
-    environment => ["COMPOSER_HOME=${::forumone::composer::home}", "HOME=${::forumone::composer::home}"],
-    user    => $::forumone::composer::user,
+  unless $forumone::drush::major_version < 7 {
+    exec { 'forumone::drush::composer':
+      command => "composer install",
+      cwd     => "/opt/drush-${version}",
+      path    => ['/usr/bin', '/user/local/bin'],
+      creates => "/opt/drush-${version}/vendor/bin/phpunit",
+      require => [Exec["forumone::drush::extract"], Class['forumone::composer']],
+      environment => ["COMPOSER_HOME=${::forumone::composer::home}", "HOME=${::forumone::composer::home}"],
+      user    => $::forumone::composer::user,
+    }
   }
 }
