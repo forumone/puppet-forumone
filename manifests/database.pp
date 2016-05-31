@@ -8,13 +8,17 @@ class forumone::database (
 ) {
   file { '/etc/mysql': 
     ensure => 'directory'
-  } ->
+  }
+
   file { '/etc/mysql/conf.d': 
     ensure => 'directory' 
-  } ->
+  }
+
   package { 'nss': 
-    ensure  => 'latest'
-  } ->
+    ensure  => 'latest',
+    before  => Class['percona']
+  }
+
   class { 'percona':
     server             => $server,
     percona_version    => $version,
