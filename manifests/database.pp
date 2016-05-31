@@ -16,7 +16,7 @@ class forumone::database (
 
   package { 'nss': 
     ensure  => 'latest',
-    before  => Class['percona']
+    before  => Class['percona::preinstall']
   }
 
   class { 'percona':
