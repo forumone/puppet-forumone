@@ -14,7 +14,7 @@ class forumone::database (
     manage_repo        => $manage_repo,
     config_include_dir => '/etc/mysql/conf.d',
     configuration      => $configuration,
-    require            => File['/etc/mysql/conf.d']
+    require            => [ File['/etc/mysql/conf.d'], Package['nss'] ]
   }
   
   create_resources('percona::conf', hiera_hash('percona::conf', {
