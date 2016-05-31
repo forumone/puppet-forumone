@@ -6,6 +6,9 @@ class forumone::database (
     'mysqld/log_bin' => 'absent'
   }
 ) {
+  package { 'nss':
+    ensure             => 'latest'
+  } ->
   file { '/etc/mysql': ensure => 'directory', } ->
   file { '/etc/mysql/conf.d': ensure => 'directory' } ->
   class { 'percona':
@@ -14,7 +17,7 @@ class forumone::database (
     manage_repo        => $manage_repo,
     config_include_dir => '/etc/mysql/conf.d',
     configuration      => $configuration,
-    require            => [ File['/etc/mysql/conf.d'], Package['nss'] ]
+    require            => File['/etc/mysql/conf.d']
   }
   
   create_resources('percona::conf', hiera_hash('percona::conf', {

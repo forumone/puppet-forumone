@@ -12,10 +12,6 @@ class forumone::os::fedora::project () {
     gpgcheck => 0
   }
 
-  package : { 'nss':
-    ensure : 'latest'
-  }
-
   class { "epel":
   }
 }
