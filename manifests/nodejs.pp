@@ -5,7 +5,7 @@ class forumone::nodejs ($modules = ["grunt-cli", "bower"], $version = 'v4.4.1') 
   }
 
   yumrepo { "devtools2":
-    baseurl  => "http://people.centos.org/tru/devtools-2/$releasever/$basearch/RPMS",
+    baseurl  => 'http://people.centos.org/tru/devtools-2/$releasever/$basearch/RPMS',
     descr    => "testing 2 devtools for CentOS $releasever",
     enabled  => 1,
     gpgcheck => 0
