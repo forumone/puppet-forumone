@@ -14,6 +14,11 @@ class forumone::nodejs ($modules = ["grunt-cli", "bower"], $version = 'v4.4.1') 
   package { [ 'devtoolset-2-gcc', 'devtoolset-2-binutils', 'devtoolset-2-gcc-c++' ]: 
     require  => Yumrepo['devtools2']
   }
+
+  file { '/etc/profile.d/devtoolset2.sh':
+    ensure   => present,
+    content  => template('forumone/nodejs/devtools2.erb')
+  }
   
   package { $modules:
     ensure   => present,
