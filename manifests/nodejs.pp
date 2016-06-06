@@ -15,6 +15,10 @@ class forumone::nodejs ($modules = ["grunt-cli", "bower"], $version = 'v4.4.1') 
     require  => Yumrepo['devtools2']
   }
 
+  package { 'scl-utils': 
+    ensure   => 'latest'
+  }
+
   file { '/etc/profile.d/devtoolset2.sh':
     ensure   => present,
     content  => template('forumone/nodejs/devtools2.erb')
