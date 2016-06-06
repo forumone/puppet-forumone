@@ -1,6 +1,6 @@
 {
   "name": "puppet-forumone",
-  "version": "1.1.42",
+  "version": "1.1.43",
   "summary": "Forum One puppet module for development",
   "author": "William Hurley",
   "description": "Creates an idiosyncratic development environment for PHP or Javascript development",

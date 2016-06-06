@@ -40,7 +40,7 @@ wd_host:              'http://127.0.0.1:8643/wd/hub'
 You must start phantomjs before you are able to run any tests that requires it:
 
 ```
-/usr/local/bin/phantomjs --webdriver=8643 &
+phantomjs --webdriver=8643 &
 ```
 
 The selenium profile uses the option java .jar file to run tests with the existing browsers on your local machine. Selenium listens on port 5555:
@@ -112,7 +112,7 @@ Web Starter by default comes with two behat-grunt tasks:
   * Add the text to the Execute Shell textbox
 
  ```
- /usr/local/bin/phantomjs --webdriver=8643 &
+ phantomjs --webdriver=8643 &
  ```
 
  5. Select 'Add a build step' -> 'Execute Shell'
