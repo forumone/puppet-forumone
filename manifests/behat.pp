@@ -33,11 +33,33 @@ class forumone::behat ($version = '2.5') {
       require  => File["${path}/tests"]
     }
 
-    # Install phantomjs
-    package { ["phantomjs-prebuilt"]:
-      ensure   => present,
-      provider => 'npm',
-      require  => Class['::nodejs']
+    # Download drush
+    exec { 'forumone::behat::phantomjs::download':
+      command => "wget --directory-prefix=/opt -O ${phantomjs_file}  https://bitbucket.org/ariya/phantomjs/downloads/${phantomjs_file}",
+      cwd     => '/opt',
+      path    => '/usr/bin',
+      creates => "/opt/${phantomjs_file}",
+      timeout => 4800,
+    }
+
+    # extract from the archive
+    exec { 'forumone::behat::phantomjs::extract':
+      command => "tar -vxjf /opt/${phantomjs_file} -C /opt",
+      path    => ["/bin", "/usr/bin"],
+      require => Exec["forumone::behat::phantomjs::download"],
+      creates => "/opt/phantomjs-${phantomjs_version}-linux-x86_64/README.md",
+    }
+
+    file { "/opt/phantomjs-${phantomjs_version}-linux-x86_64/":
+      ensure  => directory,
+      owner   => $::host_uid,
+      require => Exec['forumone::behat::phantomjs::extract']
+    }
+
+    file { '/usr/local/bin/phantomjs':
+      ensure  => 'link',
+      target  => "/opt/phantomjs-${phantomjs_version}-linux-x86_64/bin/phantomjs",
+      require => Exec['forumone::behat::phantomjs::extract']
     }
 
     file { "${path}/tests/behat/files":
