@@ -19,9 +19,13 @@ class forumone::ruby (
     path    => '/usr/bin',
     require => [ File["/tmp/vagrant-cache"] ],
     creates => "/tmp/vagrant-cache/ruby-${version}.tgz",
-    user    => $user,
-    group   => $group,
     timeout => 4800,
+  }
+  
+  file { "/tmp/vagrant-cache/ruby-${version}.tgz":
+    requires  => Exec["forumone::ruby::download"],
+    mode      => 'ugo+r',
+    ensure    => present
   }
 
   rbenv::install { $user:
@@ -46,7 +50,7 @@ class forumone::ruby (
   exec { "forumone::ruby::extract":
     command => "tar -zxvf /tmp/vagrant-cache/ruby-${version}.tgz -C ${ruby_directory}",
     path    => ["/bin"],
-    require => File[$ruby_directory],
+    require => [ File[$ruby_directory], File["/tmp/vagrant-cache/ruby-${version}.tgz"] ],
     creates => "${ruby_directory}/bin",
     user    => $user,
     group   => $group

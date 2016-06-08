@@ -14,7 +14,8 @@ class forumone ($ports = [80, 443, 8080, 8081, 18983, 8983, 3306, 13306, 1080, 4
   # Vagrant cachier directory
   file { "/tmp/vagrant-cache":
     ensure  => "directory",
-    owner   => 'vagrant'
+    owner   => 'root',
+    group   => 'root'
   }
 
   file { "/home/vagrant/.bashrc":
