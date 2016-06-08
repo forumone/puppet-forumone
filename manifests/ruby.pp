@@ -23,7 +23,7 @@ class forumone::ruby (
   }
   
   file { "/tmp/vagrant-cache/ruby-${version}.tgz":
-    requires  => Exec["forumone::ruby::download"],
+    require   => Exec["forumone::ruby::download"],
     mode      => 'ugo+r',
     ensure    => present
   }
