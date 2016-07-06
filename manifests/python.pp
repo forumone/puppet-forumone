@@ -8,7 +8,5 @@ class forumone::python(
     interpreter => $interpreter,
     requirements_file => '/vagrant/requirements.txt',
     systempkgs => true,
-    owner => $::host_uid,
-    group => $::host_gid
   }
 }
