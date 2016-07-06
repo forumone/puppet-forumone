@@ -7,6 +7,6 @@ class forumone::python(
   pythonel::virtualenv { '/vagrant/env':
     interpreter => $interpreter,
     requirements_file => '/vagrant/requirements.txt',
-    systempkgs => true,
+    systempkgs => true
   }
 }
