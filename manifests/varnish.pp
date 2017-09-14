@@ -1,12 +1,16 @@
 class forumone::varnish ($backend_port = "8080", $bind = "*:80", $cache_size = "256M", $template = undef) {
   case $::operatingsystem {
     /(?i:redhat|centos)/ : {
-      yumrepo { "varnish":
-        baseurl  => "https://packagecloud.io/install/repositories/varnishcache/varnish30/config_file.repo?os=centos&dist=6&source=script",
-        descr    => "Varnish",
+      yumrepo { "varnishcache_varnish30":
+        baseurl  => 'https://packagecloud.io/varnishcache/varnish30/el/6/$basearch',
+        descr    => "varnishcache_varnish30",
         enabled  => 1,
         priority => 1,
-        gpgcheck => 0
+        gpgcheck => 0,
+        repo_gpgcheck => 1,
+        gpgkey => "https://packagecloud.io/varnishcache/varnish30/gpgkey",
+        sslverify => 1,
+        sslcacert => "/etc/pki/tls/certs/ca-bundle.crt"
       }
     }
   }
@@ -29,7 +33,7 @@ class forumone::varnish ($backend_port = "8080", $bind = "*:80", $cache_size = "
 
   package { "varnish":
     ensure  => installed,
-    require => Yumrepo["varnish"]
+    require => Yumrepo["varnishcache_varnish30"]
   }
 
   exec { "varnish-restart":
