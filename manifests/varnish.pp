@@ -2,7 +2,7 @@ class forumone::varnish ($backend_port = "8080", $bind = "*:80", $cache_size = "
   case $::operatingsystem {
     /(?i:redhat|centos)/ : {
       yumrepo { "varnish":
-        baseurl  => "http://repo.varnish-cache.org/redhat/varnish-3.0/el6/$architecture/",
+        baseurl  => "https://packagecloud.io/install/repositories/varnishcache/varnish30/config_file.repo?os=centos&dist=6&source=script",
         descr    => "Varnish",
         enabled  => 1,
         priority => 1,
