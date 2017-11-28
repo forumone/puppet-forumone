@@ -25,6 +25,10 @@ class forumone ($ports = [80, 443, 8080, 8081, 18983, 8983, 3306, 13306, 1080, 4
     content => template("forumone/bashrc.erb"),
   }
 
+  package { "ca-certificates":
+    ensure => latest,
+  }
+
   create_resources('forumone::solr::collection', hiera_hash('forumone::solr::collections', {
   }
   ))

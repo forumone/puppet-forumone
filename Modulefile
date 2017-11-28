@@ -1,5 +1,5 @@
 name    'puppet-forumone'
-version '1.1.47'
+version '1.1.50'
 source ''
 author 'William Hurley'
 license 'GPL v2'
@@ -8,7 +8,7 @@ description 'Creates an idiosyncratic development environment for PHP or Javascr
 project_page ''
 
 ## Add dependencies, if any:
-dependency 'puppetlabs/apache', '1.0.1'
+dependency 'puppetlabs/apache', '1.11.x'
 dependency 'puppetlabs/concat', '1.1.x'
 dependency 'puppetlabs/ruby', '0.4.x'
 dependency 'stahnma/epel', '0.0.5'
@@ -18,3 +18,4 @@ dependency 'fsalum/redis', '0.0.11'
 dependency 'willdurand/nodejs', '1.8.x'
 dependency 'thias/php', '0.3.x'
 dependency 'alup/rbenv', '1.2.x'
+dependency 'puppetlabs/stdlib', '< 4.16'
